@@ -19,6 +19,44 @@ Modular import plugin for babel, compatible with [antd](https://github.com/ant-d
 
 ## Example
 
+#### `{ "libraryName": "antd", devRoad: "/User/Code/antd/lib", style: true }`
+
+- devRoad：本地开发包的lib路径，会强制替换资源路径
+
+- 仅在开发环境下使用，可通过process.env中的已设定好的变量来确定每个人本地的lib绝对路径
+
+- 绝对路径的获取：通过命令终端cd到本地的lib目录，输入pwd即可
+
+```javascript
+import { Button } from 'antd';
+ReactDOM.render(<Button>xxxx</Button>);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+      
+var _button = require('/User/Code/antd/lib/button');
+require('/User/Code/antd/lib/button/style');
+ReactDOM.render(<_button>xxxx</_button>);
+```
+
+#### `{ "libraryName": "antd", devRoad: "/User/Code/antd/lib", style: css }`
+
+- 如果不能识别css.js，建议将style置为true
+
+- 仅在开发环境下使用，可通过process.env中的已设定好的变量来确定每个人本地的lib绝对路径
+
+- 绝对路径的获取：通过命令终端cd到本地的lib目录，输入pwd即可
+
+```javascript
+import { Button } from 'antd';
+ReactDOM.render(<Button>xxxx</Button>);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+      
+var _button = require('/User/Code/antd/lib/button');
+require('/User/Code/antd/lib/button/style/css');
+ReactDOM.render(<_button>xxxx</_button>);
+```
+
 #### `{ "libraryName": "antd" }`
 
 ```javascript

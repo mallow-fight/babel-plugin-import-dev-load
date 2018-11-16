@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-import-dev-load",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Component modular import plugin for babel.",
   "repository": {
     "type": "git",
@@ -15,8 +15,7 @@
     "test": "umi-tools test --coverage",
     "debug": "umi-tools test",
     "lint": "eslint --ext .js src",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "publish":  "npm run build && npm publish"
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
