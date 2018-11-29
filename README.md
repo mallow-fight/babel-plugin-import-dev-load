@@ -1,4 +1,4 @@
-# babel-plugin-import
+# babel-plugin-import-dev-load
 
 Modular import plugin for babel, compatible with [antd](https://github.com/ant-design/ant-design), [antd-mobile](https://github.com/ant-design/ant-design-mobile), lodash, [material-ui](http://material-ui.com/), and so on.
 
@@ -7,19 +7,9 @@ Modular import plugin for babel, compatible with [antd](https://github.com/ant-d
 
 ----
 
-## Why babel-plugin-import
+## 额外功能
 
-- [English Instruction](https://ant.design/docs/react/getting-started#Import-on-Demand)
-- [中文说明](https://ant.design/docs/react/getting-started-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)
-
-## Where to add babel-plugin-import
-
-- [babelrc](https://babeljs.io/docs/usage/babelrc/)
-- [babel-loader](https://github.com/babel/babel-loader)
-
-## Example
-
-#### `{ "libraryName": "antd", devRoad: "/User/Code/antd/lib", style: true }`
+### `{ "libraryName": "antd", devRoad: "/User/Code/antd/lib", style: true }`
 
 - devRoad：本地开发包的lib路径，会强制替换资源路径
 
@@ -38,7 +28,7 @@ require('/User/Code/antd/lib/button/style');
 ReactDOM.render(<_button>xxxx</_button>);
 ```
 
-#### `{ "libraryName": "antd", devRoad: "/User/Code/antd/lib", style: css }`
+### `{ "libraryName": "antd", devRoad: "/User/Code/antd/lib", style: css }`
 
 - 如果不能识别css.js，建议将style置为true
 
@@ -56,6 +46,50 @@ var _button = require('/User/Code/antd/lib/button');
 require('/User/Code/antd/lib/button/style/css');
 ReactDOM.render(<_button>xxxx</_button>);
 ```
+
+### `{ "libraryName": "antd", devRoad: "/User/Code/antd/lib", functions: true }`
+
+- 仅在开发环境下使用，可通过process.env中的已设定好的变量来确定每个人本地的lib绝对路径
+
+- 绝对路径的获取：通过命令终端cd到本地的lib目录，输入pwd即可
+
+```javascript
+import { test } from 'antd/lib/_fns';
+test('xxx')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+      
+var _test = require('/User/Code/antd/lib/_fns/test');
+_test('xxx');
+```
+
+### `{ "libraryName": "antd", functions: true }`
+
+- 仅在开发环境下使用，可通过process.env中的已设定好的变量来确定每个人本地的lib绝对路径
+
+- 绝对路径的获取：通过命令终端cd到本地的lib目录，输入pwd即可
+
+```javascript
+import { test } from 'antd/lib/_fns';
+test('xxx')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+      
+var _test = require('antd/lib/_fns/test');
+_test('xxx');
+```
+
+## Why babel-plugin-import
+
+- [English Instruction](https://ant.design/docs/react/getting-started#Import-on-Demand)
+- [中文说明](https://ant.design/docs/react/getting-started-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)
+
+## Where to add babel-plugin-import
+
+- [babelrc](https://babeljs.io/docs/usage/babelrc/)
+- [babel-loader](https://github.com/babel/babel-loader)
+
+## Example
 
 #### `{ "libraryName": "antd" }`
 
