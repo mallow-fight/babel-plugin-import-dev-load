@@ -27,7 +27,8 @@ export default class Plugin {
     transformToDefaultImport,
     types,
     index = 0,
-    devRoad
+    devRoad,
+    functions
   ) {
     this.libraryName = libraryName;
     this.libraryDirectory = typeof libraryDirectory === 'undefined'
@@ -46,6 +47,7 @@ export default class Plugin {
     this.types = types;
     this.pluginStateKey = `importPluginState${index}`;
     this.devRoad = devRoad;
+    this.functions = functions;
   }
 
   getPluginState(state) {
@@ -73,9 +75,24 @@ export default class Plugin {
       let path = winPath(
         this.customName ? this.customName(transformedMethodName) : join(this.libraryName, libraryDirectory, transformedMethodName, this.fileName) // eslint-disable-line
       );
-      if (this.devRoad) {
+      // 开发模式下，适配本地组件lib的引用
+      if (this.devRoad && !this.functions) {
         const splits = path.split('/');
         path = `${this.devRoad}/${splits[splits.length - 1]}`;
+      }
+      // 开发模式下，适配本地函数lib的引用
+      if (this.devRoad && this.functions) {
+        const splits = path.split('/');
+        const functionName = splits[splits.length - 1];
+        const splitslibraryName = this.libraryName.split('/');
+        const libName = splitslibraryName[splitslibraryName.length - 1];
+        path = `${this.devRoad}/${libName}/${functionName}`;
+      }
+      // 生产模式下，适配本地函数lib的引用
+      if (!this.devRoad && this.functions) {
+        const splits = path.split('/');
+        const functionName = splits[splits.length - 1];
+        path = `${this.libraryName}/${functionName}`;
       }
       pluginState.selectedMethods[methodName] = this.transformToDefaultImport  // eslint-disable-line
         ? addDefault(file.path, path, { nameHint: methodName })
@@ -132,7 +149,6 @@ export default class Plugin {
 
   ImportDeclaration(path, state) {
     const { node } = path;
-
     // path maybe removed by prev instances.
     if (!node) return;
 

@@ -82,13 +82,30 @@ describe('index', () => {
             },
           },
         ];
-      } else if (caseName === 'dev-road') {
+      } else if (caseName === 'prod-functions') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'antd/lib/_fns',
+            functions: true,
+          }
+        ]
+      } else if (caseName === 'dev-components') {
         pluginWithOpts = [
           plugin,
           {
             libraryName: 'antd',
             devRoad: '/Users/mallow/Code/ke/npm/callow/lib',
             style: 'css',
+          }
+        ]
+      } else if (caseName === 'dev-functions') {
+        pluginWithOpts = [
+          plugin,
+          {
+            libraryName: 'antd/lib/_fns',
+            functions: true,
+            devRoad: '/Users/mallow/Code/ke/npm/callow/lib',
           }
         ]
       } else {
